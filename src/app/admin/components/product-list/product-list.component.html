@@ -1,0 +1,110 @@
+<div class="product-list-container">
+  <div class="header">
+    <h2>Product Management</h2>
+    <button class="btn btn-primary" routerLink="/admin/add-product">
+      Add New Product
+    </button>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search products..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="search-input"
+      >
+    </div>
+    
+    <div class="category-filter">
+      <select 
+        [(ngModel)]="selectedCategory" 
+        (change)="onCategoryChange()"
+        class="category-select"
+      >
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="products-table-container">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredProducts" class="product-row">
+          <td class="image-cell">
+            <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+          </td>
+          <td class="name-cell">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-description">{{ product.description }}</div>
+          </td>
+          <td class="category-cell">
+            <span class="category-badge">{{ product.category }}</span>
+          </td>
+          <td class="price-cell">
+            <span class="price">{{ formatPrice(product.price) }}</span>
+          </td>
+          <td class="stock-cell">
+            <span class="stock" [class.low-stock]="product.stock < 10">
+              {{ product.stock }}
+            </span>
+          </td>
+          <td class="status-cell">
+            <button 
+              class="status-toggle"
+              [class.active]="product.isActive"
+              [class.inactive]="!product.isActive"
+              (click)="toggleProductStatus(product)"
+            >
+              {{ product.isActive ? 'Active' : 'Inactive' }}
+            </button>
+          </td>
+          <td class="date-cell">
+            {{ formatDate(product.createdAt) }}
+          </td>
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <button 
+                class="btn btn-sm btn-edit" 
+                (click)="editProduct(product)"
+                title="Edit Product"
+              >
+                Edit
+              </button>
+              <button 
+                class="btn btn-sm btn-delete" 
+                (click)="deleteProduct(product)"
+                title="Delete Product"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredProducts.length === 0" class="no-products">
+      <p>No products found matching your criteria.</p>
+    </div>
+  </div>
+
+  <div class="summary">
+    <p>Total Products: {{ products.length }} | Showing: {{ filteredProducts.length }}</p>
+  </div>
+</div>
