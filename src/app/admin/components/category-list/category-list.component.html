@@ -1,0 +1,69 @@
+<div class="category-list-container">
+  <div class="header">
+    <h2>Category Management</h2>
+    <button class="btn btn-primary" routerLink="/admin/add-category">
+      Add New Category
+    </button>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search categories..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="search-input"
+      >
+    </div>
+  </div>
+
+  <div class="categories-table-container">
+    <table class="categories-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of filteredCategories" class="category-row">
+          <td class="name-cell">
+            <div class="category-name">{{ category.name }}</div>
+          </td>
+           <td class="description-cell">
+             <div class="category-description">{{ category.description }}</div>
+           </td>
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <button 
+                class="btn btn-sm btn-edit" 
+                (click)="editCategory(category)"
+                title="Edit Category"
+              >
+                Edit
+              </button>
+              <button 
+                class="btn btn-sm btn-delete" 
+                (click)="deleteCategory(category)"
+                title="Delete Category"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredCategories.length === 0" class="no-categories">
+      <p>No categories found matching your criteria.</p>
+    </div>
+  </div>
+
+  <div class="summary">
+    <p>Total Categories: {{ categories.length }} | Showing: {{ filteredCategories.length }}</p>
+  </div>
+</div>

@@ -1,32 +1,31 @@
 export interface Product {
   id: number;
   name: string;
-  description: string;
+  productCode: string;
   price: number;
   category: string;
   imageUrl: string;
   stock: number;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+ 
 }
 
 export interface CreateProductRequest {
   name: string;
-  description: string;
+  productCode: string;
   price: number;
   category: string;
-  imageUrl: string;
+  image: File;
   stock: number;
 }
 
 export interface UpdateProductRequest {
   id: number;
   name?: string;
-  description?: string;
+  productCode?: string;
   price?: number;
   category?: string;
-  imageUrl?: string;
+  image?: File;
   stock?: number;
   isActive?: boolean;
 }
+

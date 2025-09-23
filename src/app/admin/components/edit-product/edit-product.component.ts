@@ -1,42 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductService } from '../../../services/product.service';
+import { CategoryService } from '../../../services/category.service';
 import { Product, UpdateProductRequest } from '../../../models/product.model';
+import { ICategory } from '../../../models/category.model';
 
 @Component({
   selector: 'app-edit-product',
   standalone: false,
-  imports: [ReactiveFormsModule],
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent implements OnInit, OnDestroy {
-  productForm: FormGroup;
   product: Product | null = null;
   isSubmitting = false;
   isLoading = true;
+  selectedImage: File | null = null;
+  imagePreview: string | null = null;
+  categories: ICategory[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(
-    private fb: FormBuilder,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.productForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      price: ['', [Validators.required, Validators.min(0.01)]],
-      category: ['', Validators.required],
-      imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i)]],
-      stock: ['', [Validators.required, Validators.min(0)]],
-      isActive: [true]
-    });
-  }
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.loadCategories();
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
       this.loadProduct(+productId);
@@ -48,21 +41,20 @@ export class EditProductComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  loadCategories(): void {
+    this.categoryService.getActiveCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(categories => {
+        this.categories = categories;
+      });
+  }
+
   loadProduct(id: number): void {
     this.productService.getProductById(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(product => {
         if (product) {
           this.product = product;
-          this.productForm.patchValue({
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            category: product.category,
-            imageUrl: product.imageUrl,
-            stock: product.stock,
-            isActive: product.isActive
-          });
         } else {
           this.router.navigate(['/admin/products']);
         }
@@ -70,12 +62,18 @@ export class EditProductComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit(): void {
-    if (this.productForm.valid && !this.isSubmitting && this.product) {
+  onSubmit(form: any): void {
+    if (form.valid && !this.isSubmitting && this.product) {
       this.isSubmitting = true;
       const productData: UpdateProductRequest = {
         id: this.product.id,
-        ...this.productForm.value
+        name: form.value.name,
+        productCode: form.value.productCode,
+        price: form.value.price,
+        category: form.value.category,
+        stock: form.value.stock,
+        isActive: form.value.isActive,
+        image: this.selectedImage || undefined
       };
       
       this.productService.updateProduct(this.product.id, productData)
@@ -96,34 +94,39 @@ export class EditProductComponent implements OnInit, OnDestroy {
             this.isSubmitting = false;
           }
         });
-    } else {
-      this.markFormGroupTouched();
     }
   }
 
-  private markFormGroupTouched(): void {
-    Object.keys(this.productForm.controls).forEach(key => {
-      const control = this.productForm.get(key);
-      control?.markAsTouched();
-    });
+  onImageSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        alert('Image size should not exceed 5MB');
+        return;
+      }
+
+      this.selectedImage = file;
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
-  getFieldError(fieldName: string): string {
-    const control = this.productForm.get(fieldName);
-    if (control?.errors && control.touched) {
-      if (control.errors['required']) {
-        return `${fieldName} is required`;
-      }
-      if (control.errors['minlength']) {
-        return `${fieldName} must be at least ${control.errors['minlength'].requiredLength} characters`;
-      }
-      if (control.errors['min']) {
-        return `${fieldName} must be greater than ${control.errors['min'].min}`;
-      }
-      if (control.errors['pattern']) {
-        return `${fieldName} must be a valid image URL`;
-      }
-    }
-    return '';
+  removeImage(): void {
+    this.selectedImage = null;
+    this.imagePreview = null;
   }
 }

@@ -54,7 +54,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     this.filteredProducts = this.products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
+                           product.productCode.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesCategory = this.selectedCategory === '' || 
                              this.selectedCategory === 'All Categories' || 
                              product.category === this.selectedCategory;
@@ -89,15 +89,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleProductStatus(product: Product): void {
-    this.productService.toggleProductStatus(product.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(updatedProduct => {
-        if (updatedProduct) {
-          this.loadProducts();
-        }
-      });
-  }
+  // Status toggle removed per request; status is now read-only in the list
 
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {

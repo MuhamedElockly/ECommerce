@@ -1,0 +1,232 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="auth-logo">
+        <span class="logo-icon">🛍️</span>
+        <h1>ECommerce</h1>
+      </div>
+      <h2>Create Account</h2>
+      <p>Join us today and start shopping</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <span>{{ error }}</span>
+      <button (click)="clearError()" class="error-close">×</button>
+    </div>
+
+    <!-- Register Form -->
+    <form (ngSubmit)="onSubmit()" class="auth-form" #registerForm="ngForm">
+      <!-- Name Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <div class="input-container">
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="registerData.firstName"
+              required
+              class="form-input"
+              placeholder="First name"
+              [class.error]="registerForm.submitted && !registerData.firstName"
+            >
+            <span class="input-icon">👤</span>
+          </div>
+          <div *ngIf="registerForm.submitted && !registerData.firstName" class="field-error">
+            First name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <div class="input-container">
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="registerData.lastName"
+              required
+              class="form-input"
+              placeholder="Last name"
+              [class.error]="registerForm.submitted && !registerData.lastName"
+            >
+            <span class="input-icon">👤</span>
+          </div>
+          <div *ngIf="registerForm.submitted && !registerData.lastName" class="field-error">
+            Last name is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-container">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="registerData.email"
+            required
+            email
+            class="form-input"
+            placeholder="Enter your email"
+            [class.error]="registerForm.submitted && !registerData.email"
+          >
+          <span class="input-icon">📧</span>
+        </div>
+        <div *ngIf="registerForm.submitted && !registerData.email" class="field-error">
+          Email is required
+        </div>
+      </div>
+
+      <!-- Phone Number Field -->
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <div class="input-container">
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            [(ngModel)]="registerData.phoneNumber"
+            required
+            class="form-input"
+            placeholder="Enter your phone number"
+            [class.error]="registerForm.submitted && !registerData.phoneNumber"
+          >
+          <span class="input-icon">📱</span>
+        </div>
+        <div *ngIf="registerForm.submitted && !registerData.phoneNumber" class="field-error">
+          Phone number is required
+        </div>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="form-group">
+        <label for="role">Account Type</label>
+        <div class="role-selection">
+          <label class="role-option">
+            <input
+              type="radio"
+              name="role"
+              [(ngModel)]="registerData.role"
+              [value]="0"
+              class="role-radio"
+            >
+            <span class="role-label">
+              <span class="role-icon">🛒</span>
+              <span class="role-text">
+                <strong>Customer</strong>
+                <small>Shop and purchase products</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="role-option">
+            <input
+              type="radio"
+              name="role"
+              [(ngModel)]="registerData.role"
+              [value]="1"
+              class="role-radio"
+            >
+            <span class="role-label">
+              <span class="role-icon">⚙️</span>
+              <span class="role-text">
+                <strong>Admin</strong>
+                <small>Manage products and orders</small>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Password Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-container">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              name="password"
+              [(ngModel)]="registerData.password"
+              required
+              class="form-input"
+              placeholder="Create password"
+              [class.error]="registerForm.submitted && !registerData.password"
+            >
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="password-toggle"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            >
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          <div *ngIf="registerForm.submitted && !registerData.password" class="field-error">
+            Password is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-container">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              id="confirmPassword"
+              name="confirmPassword"
+              [(ngModel)]="registerData.confirmPassword"
+              required
+              class="form-input"
+              placeholder="Confirm password"
+              [class.error]="registerForm.submitted && (!registerData.confirmPassword || !passwordsMatch())"
+            >
+            <button
+              type="button"
+              (click)="toggleConfirmPasswordVisibility()"
+              class="password-toggle"
+              [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+            >
+              {{ showConfirmPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          <div *ngIf="registerForm.submitted && !registerData.confirmPassword" class="field-error">
+            Please confirm your password
+          </div>
+          <div *ngIf="registerForm.submitted && registerData.confirmPassword && !passwordsMatch()" class="field-error">
+            Passwords do not match
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="loading"
+        [class.loading]="loading"
+      >
+        <span *ngIf="!loading" class="btn-text">Create Account</span>
+        <span *ngIf="loading" class="btn-loading">
+          <span class="spinner"></span>
+          Creating Account...
+        </span>
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="auth-footer">
+      <p>Already have an account? 
+        <a routerLink="/login" class="auth-link">Sign in here</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+

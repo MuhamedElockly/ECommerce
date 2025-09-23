@@ -36,6 +36,7 @@
         <tr>
           <th>Image</th>
           <th>Name</th>
+          <th>Product Code</th>
           <th>Category</th>
           <th>Price</th>
           <th>Stock</th>
@@ -51,7 +52,9 @@
           </td>
           <td class="name-cell">
             <div class="product-name">{{ product.name }}</div>
-            <div class="product-description">{{ product.description }}</div>
+          </td>
+          <td class="code-cell">
+            <span class="product-code">{{ product.productCode }}</span>
           </td>
           <td class="category-cell">
             <span class="category-badge">{{ product.category }}</span>
@@ -65,14 +68,13 @@
             </span>
           </td>
           <td class="status-cell">
-            <button 
+            <span 
               class="status-toggle"
               [class.active]="product.isActive"
               [class.inactive]="!product.isActive"
-              (click)="toggleProductStatus(product)"
             >
               {{ product.isActive ? 'Active' : 'Inactive' }}
-            </button>
+            </span>
           </td>
           <td class="date-cell">
             {{ formatDate(product.createdAt) }}

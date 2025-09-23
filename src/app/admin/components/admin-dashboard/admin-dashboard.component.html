@@ -1,10 +1,28 @@
 <div class="admin-dashboard">
   <header class="admin-header">
-    <h1>Admin Dashboard</h1>
-    <nav class="admin-nav">
-      <a routerLink="products" routerLinkActive="active">Products</a>
-      <a routerLink="add-product" routerLinkActive="active">Add Product</a>
-    </nav>
+    <div class="header-left">
+      <h1>Admin Dashboard</h1>
+      <nav class="admin-nav">
+        <a routerLink="products" routerLinkActive="active">Products</a>
+        <a routerLink="categories" routerLinkActive="active">Categories</a>
+        <a routerLink="add-product" routerLinkActive="active">Add Product</a>
+        <a routerLink="add-category" routerLinkActive="active">Add Category</a>
+      </nav>
+    </div>
+    
+    <div class="header-right">
+      <!-- User Info -->
+      <div class="user-info" *ngIf="user">
+        <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+        <span class="user-role">{{ user.role }}</span>
+      </div>
+      
+      <!-- Logout Button -->
+      <button class="logout-btn" (click)="logout()" title="Logout">
+        <span class="logout-icon">🚪</span>
+        <span class="logout-text">Logout</span>
+      </button>
+    </div>
   </header>
   
   <main class="admin-content">

@@ -1,0 +1,140 @@
+<div class="product-catalog">
+ 
+  <div class="catalog-header">
+    <div class="header-content">
+      <h1>Our Products</h1>
+      <div class="cart-summary" *ngIf="cartSummary.totalItems > 0">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count">{{ cartSummary.totalItems }}</span>
+        <span class="cart-total">{{ formatPrice(cartSummary.totalPrice) }}</span>
+      </div>
+    </div>
+  </div>
+
+ 
+  <div class="filters-section">
+    <div class="filters-container">
+    
+      <div class="search-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Search products..."
+          class="search-input"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+
+     
+      <div class="category-filter">
+        <select
+          [(ngModel)]="selectedCategory"
+          (change)="onCategoryChange()"
+          class="category-select"
+          [disabled]="categoriesLoading"
+        >
+          <option value="">
+            {{ categoriesLoading ? 'Loading categories...' : 'All Categories' }}
+          </option>
+          <option *ngFor="let category of categories" [value]="category.name">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+    
+      <button
+        *ngIf="searchTerm || selectedCategory"
+        (click)="clearFilters()"
+        class="clear-filters-btn"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+
+  
+ 
+ 
+   
+    <div *ngIf="filteredProducts.length === 0" class="no-results">
+      <div class="no-results-content">
+        <span class="no-results-icon">📦</span>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or filters</p>
+        <button (click)="clearFilters()" class="clear-filters-btn">Clear Filters</button>
+      </div>
+    </div>
+
+
+    <div *ngIf="filteredProducts.length > 0" class="products-grid">
+      <div *ngFor="let product of filteredProducts" class="product-card">
+       
+        <div class="product-image-container">
+          <img
+            [src]="product.imageUrl"
+            [alt]="product.name"
+            class="product-image"
+            (error)="$event.target.src='assets/images/no-image.svg'"
+          >
+          <div class="product-badge" *ngIf="product.stock < 10 && product.stock > 0">
+            Low Stock
+          </div>
+          <div class="product-badge out-of-stock" *ngIf="product.stock === 0">
+            Out of Stock
+          </div>
+        </div>
+
+      
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-code">Code: {{ product.productCode }}</p>
+          <p class="product-category">{{ product.category }}</p>
+          <div class="product-price">{{ formatPrice(product.price) }}</div>
+          <div class="product-stock" [class.low-stock]="product.stock < 10">
+            Stock: {{ product.stock }}
+          </div>
+        </div>
+
+        
+        <div class="product-actions">
+          <div *ngIf="!isInCart(product.id)" class="add-to-cart-section">
+            <button
+              (click)="addToCart(product)"
+              [disabled]="product.stock === 0"
+              class="add-to-cart-btn"
+              [class.disabled]="product.stock === 0"
+            >
+              <span class="btn-icon">🛒</span>
+              Add to Cart
+            </button>
+          </div>
+
+          <div *ngIf="isInCart(product.id)" class="in-cart-section">
+            <div class="quantity-info">
+              <span class="quantity-label">In Cart:</span>
+              <span class="quantity-value">{{ getProductQuantity(product.id) }}</span>
+            </div>
+            <button
+              (click)="addToCart(product)"
+              [disabled]="product.stock === 0"
+              class="add-more-btn"
+              [class.disabled]="product.stock === 0"
+            >
+              Add More
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+

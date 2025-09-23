@@ -75,6 +75,24 @@
   margin-top: 0.25rem;
 }
 
+.no-categories-warning {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  color: #856404;
+}
+
+.no-categories-warning a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.no-categories-warning a:hover {
+  text-decoration: underline;
+}
+
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -137,6 +155,118 @@
   background-color: #7f8c8d;
 }
 
+/* Current Image Display */
+.current-image {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e1e8ed;
+}
+
+.current-image p {
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.current-image-preview {
+  max-width: 150px;
+  max-height: 100px;
+  border-radius: 4px;
+  border: 1px solid #e1e8ed;
+}
+
+/* Image Upload Styles */
+.image-upload-container {
+  position: relative;
+}
+
+.file-input {
+  display: none;
+}
+
+.image-upload-area {
+  border: 2px dashed #e1e8ed;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload-area:hover {
+  border-color: #3498db;
+  background-color: #f0f8ff;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.upload-placeholder p {
+  margin: 0;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.upload-placeholder small {
+  color: #95a5a6;
+  font-size: 0.8rem;
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.remove-image-btn:hover {
+  background-color: #c0392b;
+}
+
 @media (max-width: 768px) {
   .form-row {
     grid-template-columns: 1fr;
@@ -148,5 +278,14 @@
   
   .btn {
     width: 100%;
+  }
+  
+  .image-upload-area {
+    min-height: 150px;
+    padding: 1rem;
+  }
+  
+  .upload-icon {
+    font-size: 2rem;
   }
 }
