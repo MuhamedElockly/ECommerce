@@ -40,8 +40,6 @@
           <th>Category</th>
           <th>Price</th>
           <th>Stock</th>
-          <th>Status</th>
-          <th>Created</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -66,18 +64,6 @@
             <span class="stock" [class.low-stock]="product.stock < 10">
               {{ product.stock }}
             </span>
-          </td>
-          <td class="status-cell">
-            <span 
-              class="status-toggle"
-              [class.active]="product.isActive"
-              [class.inactive]="!product.isActive"
-            >
-              {{ product.isActive ? 'Active' : 'Inactive' }}
-            </span>
-          </td>
-          <td class="date-cell">
-            {{ formatDate(product.createdAt) }}
           </td>
           <td class="actions-cell">
             <div class="action-buttons">

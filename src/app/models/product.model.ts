@@ -26,6 +26,5 @@ export interface UpdateProductRequest {
   category?: string;
   image?: File;
   stock?: number;
-  isActive?: boolean;
 }
 
