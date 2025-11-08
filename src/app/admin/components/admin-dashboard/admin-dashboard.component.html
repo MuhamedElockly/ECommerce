@@ -9,14 +9,14 @@
         <a routerLink="add-category" routerLinkActive="active">Add Category</a>
       </nav>
     </div>
-    
+
     <div class="header-right">
       <!-- User Info -->
       <div class="user-info" *ngIf="user">
         <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
         <span class="user-role">{{ user.role }}</span>
       </div>
-      
+
       <!-- Logout Button -->
       <button class="logout-btn" (click)="logout()" title="Logout">
         <span class="logout-icon">🚪</span>
@@ -24,7 +24,7 @@
       </button>
     </div>
   </header>
-  
+
   <main class="admin-content">
     <router-outlet></router-outlet>
   </main>

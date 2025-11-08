@@ -71,7 +71,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
         productCode: form.value.productCode,
         price: form.value.price,
         category: form.value.category,
-        stock: form.value.stock,
+        quantity: form.value.quantity,
         image: this.selectedImage || undefined
       };
       

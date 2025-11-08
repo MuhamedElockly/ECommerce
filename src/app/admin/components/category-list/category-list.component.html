@@ -8,13 +8,8 @@
 
   <div class="filters">
     <div class="search-box">
-      <input 
-        type="text" 
-        placeholder="Search categories..." 
-        [(ngModel)]="searchTerm"
-        (input)="onSearchChange()"
-        class="search-input"
-      >
+      <input type="text" placeholder="Search categories..." [(ngModel)]="searchTerm" (input)="onSearchChange()"
+        class="search-input">
     </div>
   </div>
 
@@ -24,7 +19,7 @@
         <tr>
           <th>Name</th>
           <th>Description</th>
-          
+
           <th>Actions</th>
         </tr>
       </thead>
@@ -33,23 +28,15 @@
           <td class="name-cell">
             <div class="category-name">{{ category.name }}</div>
           </td>
-           <td class="description-cell">
-             <div class="category-description">{{ category.description }}</div>
-           </td>
+          <td class="description-cell">
+            <div class="category-description">{{ category.description }}</div>
+          </td>
           <td class="actions-cell">
             <div class="action-buttons">
-              <button 
-                class="btn btn-sm btn-edit" 
-                (click)="editCategory(category)"
-                title="Edit Category"
-              >
+              <button class="btn btn-sm btn-edit" (click)="editCategory(category)" title="Edit Category">
                 Edit
               </button>
-              <button 
-                class="btn btn-sm btn-delete" 
-                (click)="deleteCategory(category)"
-                title="Delete Category"
-              >
+              <button class="btn btn-sm btn-delete" (click)="deleteCategory(category)" title="Delete Category">
                 Delete
               </button>
             </div>

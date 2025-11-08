@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   category: string;
   imageUrl: string;
-  stock: number;
+  quantity: number;
  
 }
 
@@ -15,7 +15,7 @@ export interface CreateProductRequest {
   price: number;
   category: string;
   image: File;
-  stock: number;
+  quantity: number;
 }
 
 export interface UpdateProductRequest {
@@ -25,6 +25,6 @@ export interface UpdateProductRequest {
   price?: number;
   category?: string;
   image?: File;
-  stock?: number;
+  quantity?: number;
 }
 

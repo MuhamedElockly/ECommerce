@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 queryParams: { message: 'Registration successful! Please log in.' } 
               });
             }
-            // If auto-login happened, navigation will be handled by auth state subscription
+           
           },
           error: (error) => {
             console.error('Registration error:', error);

@@ -51,8 +51,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
         price: form.value.price,
         category: form.value.category,
         image: this.selectedImage,
-        stock: form.value.stock
+        quantity: form.value.stock
       };
+      console.log("stock"+form.value.stock);
       
       this.productService.createProduct(productData).subscribe({
         next: (product) => {

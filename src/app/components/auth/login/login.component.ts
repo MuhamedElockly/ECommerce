@@ -18,38 +18,38 @@ export class LoginComponent implements OnInit, OnDestroy {
     email: '',
     password: ''
   };
-  
+
   loading = false;
   error: string | null = null;
   showPassword = false;
   successMessage: string | null = null;
-  
+
   private destroy$ = new Subject<void>();
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Clear any previous errors
     this.authService.clearError();
-    
+
     // Check for success message from registration
     this.route.queryParams.subscribe(params => {
       if (params['message']) {
         this.successMessage = params['message'];
       }
     });
-    
+
     // Subscribe to auth state changes
     this.authService.authState$
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.loading = state.loading;
         this.error = state.error;
-        
+
         // Redirect if already authenticated
         if (state.isAuthenticated && state.user) {
           this.redirectAfterLogin(state.user.role);
@@ -92,8 +92,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private isFormValid(): boolean {
-    return this.loginData.email.trim() !== '' && 
-           this.loginData.password.trim() !== '';
+    return this.loginData.email.trim() !== '' &&
+      this.loginData.password.trim() !== '';
   }
 
   private redirectAfterLogin(role: 'admin' | 'customer'): void {

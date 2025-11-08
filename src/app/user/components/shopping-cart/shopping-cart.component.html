@@ -2,11 +2,7 @@
   <!-- Header -->
   <div class="cart-header">
     <h1>Shopping Cart</h1>
-    <button 
-      *ngIf="cart.items.length > 0" 
-      (click)="clearCart()" 
-      class="clear-cart-btn"
-    >
+    <button *ngIf="cart.items.length > 0" (click)="clearCart()" class="clear-cart-btn">
       Clear Cart
     </button>
   </div>
@@ -30,11 +26,7 @@
       <div *ngFor="let item of cart.items" class="cart-item">
         <!-- Product Image -->
         <div class="item-image">
-          <img 
-            [src]="item.imageUrl" 
-            [alt]="item.name"
-            (error)="$event.target.src='assets/images/no-image.svg'"
-          >
+          <img [src]="item.imageUrl" [alt]="item.name" (error)="$event.target.src='assets/images/no-image.svg'">
         </div>
 
         <!-- Product Info -->
@@ -46,18 +38,12 @@
 
         <!-- Quantity Controls -->
         <div class="quantity-controls">
-          <button 
-            (click)="updateQuantity(item, item.quantity - 1)"
-            class="quantity-btn"
-            [disabled]="item.quantity <= 1"
-          >
+          <button (click)="updateQuantity(item, item.quantity - 1)" class="quantity-btn"
+            [disabled]="item.quantity <= 1">
             −
           </button>
           <span class="quantity">{{ item.quantity }}</span>
-          <button 
-            (click)="updateQuantity(item, item.quantity + 1)"
-            class="quantity-btn"
-          >
+          <button (click)="updateQuantity(item, item.quantity + 1)" class="quantity-btn">
             +
           </button>
         </div>
@@ -68,11 +54,7 @@
         </div>
 
         <!-- Remove Button -->
-        <button 
-          (click)="removeItem(item.productId)"
-          class="remove-btn"
-          title="Remove item"
-        >
+        <button (click)="removeItem(item.productId)" class="remove-btn" title="Remove item">
           🗑️
         </button>
       </div>
@@ -83,18 +65,18 @@
       <div class="summary-header">
         <h2>Order Summary</h2>
       </div>
-      
+
       <div class="summary-details">
         <div class="summary-row">
           <span>Items ({{ cart.totalItems }}):</span>
           <span>{{ formatPrice(cart.totalPrice) }}</span>
         </div>
-        
+
         <div class="summary-row">
           <span>Shipping:</span>
           <span>Free</span>
         </div>
-        
+
         <div class="summary-row total">
           <span>Total:</span>
           <span>{{ formatPrice(cart.totalPrice) }}</span>
@@ -102,24 +84,14 @@
       </div>
 
       <div class="checkout-actions">
-        <button 
-          (click)="proceedToCheckout()"
-          class="checkout-btn"
-        >
+        <button (click)="proceedToCheckout()" class="checkout-btn">
           Proceed to Checkout
         </button>
-        
-        <a 
-          routerLink="/user/products" 
-          class="continue-shopping-link"
-        >
+
+        <a routerLink="/user/products" class="continue-shopping-link">
           Continue Shopping
         </a>
       </div>
     </div>
   </div>
 </div>
-
-
-
-

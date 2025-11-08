@@ -26,7 +26,7 @@ export const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-  
+
 
   {
     path: 'admin',
@@ -42,7 +42,7 @@ export const routes: Routes = [
       { path: 'edit-category/:id', component: EditCategoryComponent }
     ]
   },
-  
+
   {
     path: 'user',
     component: UserLayoutComponent,
@@ -58,7 +58,7 @@ export const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   },
-  
+
   {
     path: '**',
     redirectTo: '/login'

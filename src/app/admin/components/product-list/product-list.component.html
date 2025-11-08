@@ -8,21 +8,12 @@
 
   <div class="filters">
     <div class="search-box">
-      <input 
-        type="text" 
-        placeholder="Search products..." 
-        [(ngModel)]="searchTerm"
-        (input)="onSearchChange()"
-        class="search-input"
-      >
+      <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (input)="onSearchChange()"
+        class="search-input">
     </div>
-    
+
     <div class="category-filter">
-      <select 
-        [(ngModel)]="selectedCategory" 
-        (change)="onCategoryChange()"
-        class="category-select"
-      >
+      <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()" class="category-select">
         <option *ngFor="let category of categories" [value]="category">
           {{ category }}
         </option>
@@ -61,24 +52,16 @@
             <span class="price">{{ formatPrice(product.price) }}</span>
           </td>
           <td class="stock-cell">
-            <span class="stock" [class.low-stock]="product.stock < 10">
-              {{ product.stock }}
+            <span class="stock" [class.low-stock]="product.quantity < 10">
+              {{ product.quantity }}
             </span>
           </td>
           <td class="actions-cell">
             <div class="action-buttons">
-              <button 
-                class="btn btn-sm btn-edit" 
-                (click)="editProduct(product)"
-                title="Edit Product"
-              >
+              <button class="btn btn-sm btn-edit" (click)="editProduct(product)" title="Edit Product">
                 Edit
               </button>
-              <button 
-                class="btn btn-sm btn-delete" 
-                (click)="deleteProduct(product)"
-                title="Delete Product"
-              >
+              <button class="btn btn-sm btn-delete" (click)="deleteProduct(product)" title="Delete Product">
                 Delete
               </button>
             </div>

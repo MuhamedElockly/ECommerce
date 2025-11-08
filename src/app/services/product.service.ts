@@ -82,7 +82,7 @@ export class ProductService {
         formData.append('PCode', productData.productCode);
         formData.append('price', productData.price.toString());
         formData.append('categoryId', categoryId.toString());
-        formData.append('stock', productData.stock.toString());
+        formData.append('quantity', productData.quantity.toString());
         
       
         if (productData.image) {
@@ -123,7 +123,7 @@ export class ProductService {
         formData.append('PCode', productData.productCode ?? '');
         formData.append('price', (productData.price ?? 0).toString());
         formData.append('categoryId', categoryId.toString());
-        formData.append('stock', (productData.stock ?? 0).toString());
+        formData.append('quantity', (productData.quantity ?? 0).toString());
         
      
         if (productData.image) {
@@ -185,7 +185,7 @@ export class ProductService {
       price: productDTO.finalPrice, 
       category: productDTO.categoryName || 'Uncategorized', 
       imageUrl: this.getFullImageUrl(productDTO.imageUrl),
-      stock: productDTO.quantity, 
+      quantity: productDTO.quantity, 
     
     };
   }

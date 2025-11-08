@@ -5,7 +5,7 @@ export interface RegisterRequest {
   phoneNumber: string;
   password: string;
   confirmPassword: string;
-  role: number; // backend expects numeric enum (e.g., 0=admin/customer)
+  role: number; 
 }
 
 export interface LoginRequest {

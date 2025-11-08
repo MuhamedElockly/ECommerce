@@ -19,7 +19,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   constructor(
     private categoryService: CategoryService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -42,7 +42,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     this.filteredCategories = this.categories.filter(category => {
       const matchesSearch = category.name.toLowerCase().includes(this.searchTerm.toLowerCase());
-      
+
       return matchesSearch;
     });
   }

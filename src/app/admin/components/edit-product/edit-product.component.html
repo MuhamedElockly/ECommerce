@@ -1,83 +1,44 @@
 <div class="edit-product-container">
   <div class="card">
     <h2>Edit Product</h2>
-    
+
     <div *ngIf="isLoading" class="loading">
       <p>Loading product...</p>
     </div>
-    
+
     <form *ngIf="!isLoading" #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" class="product-form">
       <div class="form-group">
         <label for="name">Product Name *</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name"
-          ngModel
-          required
-          minlength="3"
-          class="form-control"
-          [value]="product?.name"
-        >
+        <input type="text" id="name" name="name" ngModel required minlength="3" class="form-control"
+          [value]="product?.name">
       </div>
 
       <div class="form-group">
         <label for="productCode">Product Code *</label>
-        <input 
-          type="text" 
-          id="productCode" 
-          name="productCode"
-          ngModel
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="e.g., PROD-001"
-          [value]="product?.productCode"
-        >
+        <input type="text" id="productCode" name="productCode" ngModel required minlength="3" class="form-control"
+          placeholder="e.g., PROD-001" [value]="product?.productCode">
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="price">Price *</label>
-          <input 
-            type="number" 
-            id="price" 
-            name="price"
-            ngModel
-            required
-            min="0.01"
-            step="0.01"
-            class="form-control"
-            [value]="product?.price"
-          >
+          <input type="number" id="price" name="price" ngModel required min="0.01" step="0.01" class="form-control"
+            [value]="product?.price">
         </div>
 
         <div class="form-group">
           <label for="stock">Stock Quantity *</label>
-          <input 
-            type="number" 
-            id="stock" 
-            name="stock"
-            ngModel
-            required
-            min="0"
-            class="form-control"
-            [value]="product?.stock"
-          >
+          <input type="number" id="stock" name="quantity" ngModel required min="0" class="form-control"
+            [value]="product?.quantity">
         </div>
       </div>
 
       <div class="form-group">
         <label for="category">Category *</label>
-        <select 
-          id="category" 
-          name="category"
-          ngModel
-          required
-          class="form-control"
-        >
+        <select id="category" name="category" ngModel required class="form-control">
           <option value="">Select a category</option>
-          <option *ngFor="let category of categories" [value]="category.name" [selected]="category.name === product?.category">
+          <option *ngFor="let category of categories" [value]="category.name"
+            [selected]="category.name === product?.category">
             {{ category.name }}
           </option>
         </select>
@@ -93,14 +54,8 @@
           <img [src]="product.imageUrl" [alt]="product.name" class="current-image-preview">
         </div>
         <div class="image-upload-container">
-          <input 
-            type="file" 
-            id="image" 
-            accept="image/*"
-            (change)="onImageSelected($event)"
-            class="file-input"
-            #fileInput
-          >
+          <input type="file" id="image" accept="image/*" (change)="onImageSelected($event)" class="file-input"
+            #fileInput>
           <div class="image-upload-area" (click)="fileInput.click()">
             <div *ngIf="!imagePreview" class="upload-placeholder">
               <div class="upload-icon">📷</div>
@@ -115,21 +70,13 @@
         </div>
       </div>
 
-      
+
 
       <div class="form-actions">
-        <button 
-          type="button" 
-          class="btn btn-secondary" 
-          (click)="router.navigate(['/admin/products'])"
-        >
+        <button type="button" class="btn btn-secondary" (click)="router.navigate(['/admin/products'])">
           Cancel
         </button>
-        <button 
-          type="submit" 
-          class="btn btn-primary" 
-          [disabled]="productForm.invalid || isSubmitting"
-        >
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || isSubmitting">
           {{ isSubmitting ? 'Updating...' : 'Update Product' }}
         </button>
       </div>
